@@ -1,0 +1,69 @@
+class mini:
+    def __init__(self,dist):
+        self.dist=dist
+    def display(self,dist):
+        if self.dist>75:
+            print("Mini-Rs."+str(self.dist*8),end=",")
+        else:
+            amt=0;cov_dist=self.dist
+            if(cov_dist>0):
+                cov_dist-=3 
+                amt+=50 
+            if(cov_dist>0):
+                curr_dist=cov_dist-15
+                if curr_dist>=0:
+                    amt+=(15*10)
+                else:
+                    amt+=(cov_dist*10)
+                cov_dist=curr_dist 
+            if(cov_dist>0):
+                amt+=(cov_dist*8)
+            print("Mini-Rs."+str(amt),end=",")
+class sedan:
+    def __init__(self,dist):
+        self.dist=dist
+    def display(self,dist):
+        if self.dist>100:
+            print("Sedan-Rs."+str(self.dist*10),end=",")
+        else:
+            amt=0;cov_dist=self.dist
+            if(cov_dist>0):
+                cov_dist-=5
+                amt+=80
+            if(cov_dist>0):
+                curr_dist=cov_dist-15
+                if curr_dist>=0:
+                    amt+=(15*12)
+                else:
+                    amt+=(cov_dist*12)
+                cov_dist=curr_dist 
+            if(cov_dist>0):
+                amt+=(cov_dist*10)
+            print("Sedan-Rs."+str(amt),end=",")
+class suv:
+    def __init__(self,dist):
+        self.dist=dist
+    def display(self,dist):
+        amt=0;cov_dist=self.dist
+        if(cov_dist>0):
+            cov_dist-=5 
+            amt+=100
+        if(cov_dist>0):
+            curr_dist=cov_dist-15
+            if curr_dist>=0:
+                cov_dist=curr_dist 
+                amt+=(15*15)
+            else:
+                amt+=(cov_dist*15)
+                cov_dist=curr_dist 
+        if(cov_dist>0):
+            amt+=(cov_dist*12)
+        print("SUV-Rs."+str(amt),end=" ")
+dist,km=input().split()
+dist=int(dist)
+Mini=mini(dist)
+Mini.display(dist)
+Sedan=sedan(dist)
+Sedan.display(dist)
+Suv=suv(dist)
+Suv.display(dist)
