@@ -1,0 +1,54 @@
+
+class taxi:
+    def __init__(self,dist):
+        self.dist=dist
+    def display(self,dist,cartype):
+        if cartype=="Mini":
+            base_km=3
+            base_km_charge=50
+            next_few=15
+            next_fewkm_charge=10
+            remaining_km_charge=8
+            flat_charge=8
+            peak_distance=75
+        elif cartype=="Sedan":
+            base_km=5
+            base_km_charge=80
+            next_few=15
+            next_fewkm_charge=12
+            remaining_km_charge=10
+            flat_charge=10
+            peak_distance=100
+        elif cartype=="SUV":
+            base_km=5
+            base_km_charge=100
+            next_few=15
+            next_fewkm_charge=15
+            remaining_km_charge=12
+            peak_distance=10000
+        if self.dist>peak_distance:
+            print(cartype+"-Rs."+str(self.dist*flat_charge),end=",")
+        else:
+            amt=0;cov_dist=self.dist
+            if(cov_dist>0):
+                cov_dist-=base_km
+                amt+=base_km_charge
+            if(cov_dist>0):
+                curr_dist=cov_dist-next_few
+                if curr_dist>=0:
+                    amt+=(next_few*next_fewkm_charge)
+                else:
+                    amt+=(cov_dist*next_fewkm_charge)
+                cov_dist=curr_dist 
+            if(cov_dist>0):
+                amt+=(cov_dist*remaining_km_charge)
+            print(cartype+"-Rs."+str(amt),end=",")
+distance,km=input().split()
+distance=int(distance)
+Mini=taxi(distance)
+Mini.display(distance,"Mini")
+Sedan=taxi(distance)
+Sedan.display(distance,"Sedan")
+Suv=taxi(distance)
+Suv.display(distance,"SUV")            
+            
