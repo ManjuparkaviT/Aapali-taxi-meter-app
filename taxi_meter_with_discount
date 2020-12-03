@@ -1,0 +1,77 @@
+class taxi:
+    def __init__(self,dist):
+        self.dist=dist
+    def calculateFair(self,dist,count):
+        
+            
+        if self.dist>self.peak_distance:
+            amt=self.dist*self.flat_charge
+        else:
+            amt=0;cov_dist=self.dist
+            if(cov_dist>0):
+                cov_dist-=self.base_km
+                amt+=self.base_km_charge
+            if(cov_dist>0):
+                curr_dist=cov_dist-self.next_few
+                if curr_dist>=0:
+                    amt+=(self.next_few*self.next_fewkm_charge)
+                else:
+                    amt+=(cov_dist*self.next_fewkm_charge)
+                cov_dist=curr_dist 
+            if(cov_dist>0):
+                amt+=(cov_dist*self.remaining_km_charge)
+        if count==1:
+            discount=0.25*amt
+            amt-=discount
+        elif count%2!=0:
+            discount=0.10*amt
+            amt-=discount
+        print("-Rs."+str(amt),end=",")
+class Mini(taxi):
+    base_km=3
+    base_km_charge=50
+    next_few=15
+    next_fewkm_charge=10
+    remaining_km_charge=8
+    flat_charge=8
+    peak_distance=75
+class Sedan(taxi):
+    base_km=5
+    base_km_charge=80
+    next_few=15
+    next_fewkm_charge=12
+    remaining_km_charge=10
+    flat_charge=10
+    peak_distance=100
+class Suv(taxi):
+    base_km=5
+    base_km_charge=100
+    next_few=15
+    next_fewkm_charge=15
+    remaining_km_charge=12
+    peak_distance=10000
+def get_distance(dist):
+    distance=""
+    for digit in dist:
+        if digit.isdigit():
+            distance+=digit
+    return int(distance)
+def booking_count(booking,number): 
+    if number in booking.keys():
+        booking[number]+=1 
+    else:
+        booking[number]=1
+    return booking[number]
+inputs=int(input())
+booking={}
+for entry in range(inputs):
+    dist,number=input().split(",")
+    distance=get_distance(dist)
+    count=booking_count(booking,number)
+    mini=Mini(distance)
+    mini.calculateFair(distance,count)
+    sedan=Sedan(distance)
+    sedan.calculateFair(distance,count)
+    suv=Suv(distance)
+    suv.calculateFair(distance,count)            
+    print()     
